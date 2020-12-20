@@ -1,13 +1,13 @@
 package com.ztgg.ecommerce.dao;
 
-
 import java.util.List;
 import com.ztgg.ecommerce.entity.Area;
 
-public interface AreaDao {
+public interface AreaDao{ // C Read U D
 	/**
-	 * return all area list
+	 * this function returns a list of areas
 	 * @return areaList
 	 */
 	List<Area> queryArea();
+	
 }
