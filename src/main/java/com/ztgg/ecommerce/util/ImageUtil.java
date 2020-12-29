@@ -2,6 +2,7 @@ package com.ztgg.ecommerce.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -28,19 +29,19 @@ public class ImageUtil {
 	/**
 	 * process image input, return the path for processed image
 	 * 
-	 * @param thumbnail
+	 * @param thumbnailInputStream
 	 * @param targetAddr
 	 * @return 
 	 */
-	public static String generateThumbnail(File thumbnail, String targetAddr) {
+	public static String generateThumbnail(InputStream thumbnailInputStream, String fileName, String targetAddr) {
 		String realFileName = getRandomFileName();
-		String extension = getFileExtension(thumbnail);
+		String extension = getFileExtension(fileName);
 		makeDirPath(targetAddr);
 
 		String relativeAddr = targetAddr + realFileName + extension;
 		File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
 		try {
-			Thumbnails.of(thumbnail).size(800, 600)
+			Thumbnails.of(thumbnailInputStream).size(800, 600)
 					.watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.png")), 0.25f)
 					.outputQuality(0.8f).toFile(dest);
 		} catch (IOException e) {
@@ -77,9 +78,8 @@ public class ImageUtil {
 		return nowTimeStr + rannum;
 	}
 	
-	private static String getFileExtension(File cFile) {
-		String originalFileNameString = cFile.getName();
-		return originalFileNameString.substring(originalFileNameString.lastIndexOf("."));
+	private static String getFileExtension(String fileName) {
+		return fileName.substring(fileName.lastIndexOf("."));
 	}
 	
 	private static void makeDirPath(String targetAddr) {

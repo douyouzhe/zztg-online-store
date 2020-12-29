@@ -1,6 +1,6 @@
 package com.ztgg.ecommerce.service.impl;
 
-import java.io.File;
+import java.io.InputStream;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	@Transactional
-	public ShopDto addShop(Shop shop, File thumbnail) {
+	public ShopDto addShop(Shop shop, InputStream shopImgInputStream, String fileName) {
 		// empty shop input
 		if (shop == null) {
 			return new ShopDto(ShopStateEnum.NULL_SHOP);
@@ -39,10 +39,10 @@ public class ShopServiceImpl implements ShopService {
 			if (effectedNum <= 0) {
 				throw new ShopOperationException("error creating new shop");
 			} else {
-				if (thumbnail != null) {
+				if (shopImgInputStream != null) {
 					// shop image
 					try {
-						addShopImg(shop, thumbnail);
+						addShopImg(shop, shopImgInputStream, fileName);
 					} catch (Exception e) {
 						throw new ShopOperationException("addShopImg error:" + e.getMessage());
 					}
@@ -59,9 +59,9 @@ public class ShopServiceImpl implements ShopService {
 		return new ShopDto(ShopStateEnum.CHECK, shop);
 	}
 
-	private void addShopImg(Shop shop, File thumbnail) {
+	private void addShopImg(Shop shop, InputStream shopImgInputStream, String fileName) {
 		String dest = PathUtil.getShopImagePath(shop.getShopId());
-		String shopImgAddr = ImageUtil.generateThumbnail(thumbnail, dest);
+		String shopImgAddr = ImageUtil.generateThumbnail(shopImgInputStream, fileName, dest);
 		shop.setShopImg(shopImgAddr);
 	}
 }

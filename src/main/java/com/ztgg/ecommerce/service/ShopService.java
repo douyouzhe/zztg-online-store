@@ -1,9 +1,10 @@
 package com.ztgg.ecommerce.service;
 
-import java.io.File;
+import java.io.InputStream;
 
 import com.ztgg.ecommerce.dto.ShopDto;
 import com.ztgg.ecommerce.entity.Shop;
+import com.ztgg.ecommerce.exceptions.ShopOperationException;
 
 public interface ShopService {
 
@@ -15,5 +16,5 @@ public interface ShopService {
 	 * @param fileName
 	 * @return
 	 */
-	ShopDto addShop(Shop shop, File thumbnail);
+	ShopDto addShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
 }
