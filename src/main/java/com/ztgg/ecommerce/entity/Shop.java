@@ -16,6 +16,7 @@ public class Shop {
 	private ShopCategory shopCategory;
 	private Date timeCreated;
 	private Date timeUpdated;
+	
 
 	public Long getShopId() {
 		return shopId;

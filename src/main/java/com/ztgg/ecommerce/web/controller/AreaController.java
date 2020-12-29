@@ -22,7 +22,7 @@ public class AreaController {
 	@Autowired
 	private AreaService areaService;
 	
-	@RequestMapping("/hello")
+	@RequestMapping(value = "/hello",method = RequestMethod.GET)
 	@ResponseBody
 	private String testHello() {
 		return "HelloWorld from spring controller";
@@ -35,7 +35,7 @@ public class AreaController {
 		List<Area> list = new ArrayList<Area>();
 		try {
 			list = areaService.getAreaList();
-			modelMap.put("rows", list);
+			modelMap.put("data", list);
 			modelMap.put("total", list.size());
 		} catch (Exception e) {
 			e.printStackTrace();
