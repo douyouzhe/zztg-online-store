@@ -35,6 +35,7 @@ public class ShopDto {
 		this.stateInfo = stateEnum.getStateInfo();
 		this.shopList = shopList;
 	}
+	
 
 	public int getState() {
 		return state;

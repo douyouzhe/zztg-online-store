@@ -20,12 +20,12 @@ public class ImageUtil {
 	private static final SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
 	private static final Random r = new Random();
 
-	public static void main(String[] args) throws IOException {
-		Thumbnails.of(new File("/Users/youzhedou/Desktop/workspace/online-store/src/main/resources/test-images/bookstoreimg.png")).size(800, 600)
-				.watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.png")), 0.25f)
-				.outputQuality(0.8f).toFile("/Users/youzhedou/Desktop/workspace/online-store/src/main/resources/test-images/newbookstoreimg.png");
-	}
-	
+//	public static void main(String[] args) throws IOException {
+//		Thumbnails.of(new File("/Users/youzhedou/Desktop/workspace/online-store/src/main/resources/test-images/bookstoreimg.png")).size(800, 600)
+//				.watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.png")), 0.25f)
+//				.outputQuality(0.8f).toFile("/Users/youzhedou/Desktop/workspace/online-store/src/main/resources/test-images/newbookstoreimg.png");
+//	}
+//	
 	/**
 	 * process image input, return the path for processed image
 	 * 
@@ -35,7 +35,7 @@ public class ImageUtil {
 	 */
 	public static String generateThumbnail(InputStream thumbnailInputStream, String fileName, String targetAddr) {
 		String realFileName = getRandomFileName();
-		String extension = getFileExtension(fileName);
+		String extension = getFileExtension(fileName); //XXX.jpg
 		makeDirPath(targetAddr);
 
 		String relativeAddr = targetAddr + realFileName + extension;

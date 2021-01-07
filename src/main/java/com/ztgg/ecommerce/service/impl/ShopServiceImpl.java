@@ -28,6 +28,7 @@ public class ShopServiceImpl implements ShopService {
 		if (shop == null) {
 			return new ShopDto(ShopStateEnum.NULL_SHOP);
 		}
+		
 		try {
 			// set status to CHECK
 			shop.setEnableStatus(0);
@@ -39,6 +40,7 @@ public class ShopServiceImpl implements ShopService {
 			if (effectedNum <= 0) {
 				throw new ShopOperationException("error creating new shop");
 			} else {
+				// success case: insert image
 				if (shopImgInputStream != null) {
 					// shop image
 					try {
