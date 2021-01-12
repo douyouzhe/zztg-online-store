@@ -37,7 +37,7 @@ version="3.1" metadata-complete="true">
 		</init-param>
 		<init-param>
 			<param-name>kaptcha.textproducer.char.string</param-name>
-			<param-value>ACDEFHKPRSTWX345679</param-value>
+			<param-value>ACDEFHKPRSTWX34567912</param-value>
 		</init-param>
 		<init-param>
 			<param-name>kaptcha.image.height</param-name>
