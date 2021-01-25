@@ -40,7 +40,7 @@ public class ShopServiceTest extends BaseTest {
 	@Ignore
 	public void testModifyShop() throws ShopOperationException, FileNotFoundException {
 		Shop shop = new Shop();
-		shop.setShopId(15L);
+		shop.setShopId(20L);
 		shop.setShopName("new name after modify");
 		File shopImg = new File("/Users/youzhedou/Desktop/workspace/online-store/src/main/resources/test-images/newbookstore.png");
 		InputStream is = new FileInputStream(shopImg);
@@ -49,6 +49,7 @@ public class ShopServiceTest extends BaseTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testGetShopList() {
 		Shop shopCondition = new Shop();
 		ShopCategory sc = new ShopCategory();

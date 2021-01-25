@@ -23,6 +23,8 @@ public class ShopServiceImpl implements ShopService {
 	@Autowired
 	private ShopDao shopDao;
 
+	//atomic
+	
 	@Override
 	@Transactional
 	public ShopDto addShop(Shop shop, InputStream shopImgInputStream, String fileName) {

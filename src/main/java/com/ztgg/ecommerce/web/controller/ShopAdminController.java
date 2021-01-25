@@ -19,11 +19,16 @@ public class ShopAdminController {
 	
 	@RequestMapping(value = "/shoplist")
 	public String shopList() {
-		return "shop/shoplist";
+		return "shop/shoplist=";
 	}
 	
 	@RequestMapping(value = "/shopmanagement")
 	public String shopManagement() {
 		return "shop/shopmanagement";
+	}
+	
+	@RequestMapping(value = "/productcategorymanagement", method = RequestMethod.GET)
+	private String productCategoryManage() {
+		return "shop/productcategorymanagement";
 	}
 }
