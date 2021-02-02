@@ -18,7 +18,7 @@ public interface ProductCategoryDao {
 	
 	/**
 	 * batch add
-	 * 
+	 * num of rows effected
 	 * @param productCategoryList
 	 * @return
 	 */

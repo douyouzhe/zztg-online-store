@@ -2,7 +2,9 @@ $(function() {
 	var listUrl = '/online-store/shopadmin/getproductcategorylist';
 	var addUrl = '/online-store/shopadmin/addproductcategorys';
 	var deleteUrl = '/online-store/shopadmin/removeproductcategory';
+	
 	getList();
+	
 	function getList() {
 		$.getJSON(
 			listUrl,
@@ -29,6 +31,7 @@ $(function() {
 				}
 			});
 	}
+	
 	$('#new')
 			.click(
 					function() {
@@ -39,6 +42,7 @@ $(function() {
 								+ '</div>';
 						$('.category-wrap').append(tempHtml);
 					});
+					
 	$('#submit').click(function() {
 		var tempArr = $('.temp');
 		var productCategoryList = [];

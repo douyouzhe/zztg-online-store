@@ -1,6 +1,5 @@
 package com.ztgg.ecommerce.service.impl;
 
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ztgg.ecommerce.dao.ShopDao;
+import com.ztgg.ecommerce.dto.ImageHolder;
 import com.ztgg.ecommerce.dto.ShopDto;
 import com.ztgg.ecommerce.entity.Shop;
 import com.ztgg.ecommerce.enums.ShopStateEnum;
@@ -27,7 +27,7 @@ public class ShopServiceImpl implements ShopService {
 	
 	@Override
 	@Transactional
-	public ShopDto addShop(Shop shop, InputStream shopImgInputStream, String fileName) {
+	public ShopDto addShop(Shop shop, ImageHolder thumbnail) {
 		// empty shop input
 		if (shop == null) {
 			return new ShopDto(ShopStateEnum.NULL_SHOP);
@@ -45,10 +45,10 @@ public class ShopServiceImpl implements ShopService {
 				throw new ShopOperationException("error creating new shop");
 			} else {
 				// success case: insert image
-				if (shopImgInputStream != null) {
+				if (thumbnail != null) {
 					// shop image
 					try {
-						addShopImg(shop, shopImgInputStream, fileName);
+						addShopImg(shop, thumbnail);
 					} catch (Exception e) {
 						throw new ShopOperationException("addShopImg error:" + e.getMessage());
 					}
@@ -65,9 +65,9 @@ public class ShopServiceImpl implements ShopService {
 		return new ShopDto(ShopStateEnum.CHECK, shop);
 	}
 
-	private void addShopImg(Shop shop, InputStream shopImgInputStream, String fileName) {
+	private void addShopImg(Shop shop, ImageHolder thumbnail) {
 		String dest = PathUtil.getShopImagePath(shop.getShopId());
-		String shopImgAddr = ImageUtil.generateThumbnail(shopImgInputStream, fileName, dest);
+		String shopImgAddr = ImageUtil.generateThumbnail(thumbnail, dest);
 		shop.setShopImg(shopImgAddr);
 	}
 
@@ -78,19 +78,19 @@ public class ShopServiceImpl implements ShopService {
 
 	@Override
 	@Transactional
-	public ShopDto modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException {
+	public ShopDto modifyShop(Shop shop, ImageHolder thumbnail) throws ShopOperationException {
 		if (shop == null || shop.getShopId() == null) {
 			return new ShopDto(ShopStateEnum.NULL_SHOP);
 		} else {
 			// 1.is image processing needed?
 			try {
-				if (shopImgInputStream != null && fileName != null) {
+				if (thumbnail != null) {
 					Shop tempShop = shopDao.queryByShopId(shop.getShopId());
 					// delete old image if exist
 					if (tempShop.getShopImg() != null) {
 						ImageUtil.deleteFileOrPath(tempShop.getShopImg());
 					}
-					addShopImg(shop, shopImgInputStream,fileName);
+					addShopImg(shop, thumbnail);
 				}
 				// 2.update shop info
 				shop.setTimeUpdated(new Date());

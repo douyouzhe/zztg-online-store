@@ -2,7 +2,6 @@ package com.ztgg.ecommerce.util;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -10,6 +9,8 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.ztgg.ecommerce.dto.ImageHolder;
 
 import net.coobird.thumbnailator.Thumbnails;
 import net.coobird.thumbnailator.geometry.Positions;
@@ -33,19 +34,42 @@ public class ImageUtil {
 	 * @param targetAddr
 	 * @return 
 	 */
-	public static String generateThumbnail(InputStream thumbnailInputStream, String fileName, String targetAddr) {
+	public static String generateThumbnail(ImageHolder thumbnail, String targetAddr) {
 		String realFileName = getRandomFileName();
-		String extension = getFileExtension(fileName); //XXX.jpg
+		String extension = getFileExtension(thumbnail.getImageName()); //XXX.jpg
 		makeDirPath(targetAddr);
 
 		String relativeAddr = targetAddr + realFileName + extension;
 		File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
 		try {
-			Thumbnails.of(thumbnailInputStream).size(800, 600)
+			Thumbnails.of(thumbnail.getImage()).size(800, 600)
 					.watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.png")), 0.25f)
 					.outputQuality(0.8f).toFile(dest);
 		} catch (IOException e) {
 			throw new RuntimeException("generateThumbnail failed：" + e.toString());
+		}
+		return relativeAddr;
+	}
+	
+	/**
+	 * 
+	 * 
+	 * @param thumbnail
+	 * @param targetAddr
+	 * @return
+	 */
+	public static String generateNormalImg(ImageHolder thumbnail, String targetAddr) {
+		String realFileName = getRandomFileName();
+		String extension = getFileExtension(thumbnail.getImageName());
+		makeDirPath(targetAddr);
+		String relativeAddr = targetAddr + realFileName + extension;
+		File dest = new File(PathUtil.getImgBasePath() + relativeAddr);
+		try {
+			Thumbnails.of(thumbnail.getImage()).size(800, 600)
+					//.watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(basePath + "/watermark.jpg")), 0.25f)
+					.outputQuality(0.9f).toFile(dest);
+		} catch (IOException e) {
+			throw new RuntimeException("generateNormalImg failed：" + e.toString());
 		}
 		return relativeAddr;
 	}

@@ -14,6 +14,7 @@ public class Result<T> {
 	private int errorCode;
 
 	public Result() {
+	
 	}
 
 	// success case

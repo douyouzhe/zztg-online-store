@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ztgg.ecommerce.BaseTest;
+import com.ztgg.ecommerce.dto.ImageHolder;
 import com.ztgg.ecommerce.dto.ShopDto;
 import com.ztgg.ecommerce.entity.Area;
 import com.ztgg.ecommerce.entity.Shop;
@@ -32,7 +33,8 @@ public class ShopServiceTest extends BaseTest {
 		Shop shop = mockANewShop(1L, 2, 1L);
 		File shopImg = new File("/Users/youzhedou/Desktop/workspace/online-store/src/main/resources/test-images/bookstoreimg.png");
 		InputStream inputStream = new FileInputStream(shopImg);
-		ShopDto shopDto = shopService.addShop(shop, inputStream, shopImg.getName());
+		ImageHolder imageHolder = new ImageHolder(shopImg.getName(),inputStream);
+		ShopDto shopDto = shopService.addShop(shop, imageHolder);
 		assertEquals(ShopStateEnum.CHECK.getState(), shopDto.getState());
 	}
 	
@@ -44,7 +46,8 @@ public class ShopServiceTest extends BaseTest {
 		shop.setShopName("new name after modify");
 		File shopImg = new File("/Users/youzhedou/Desktop/workspace/online-store/src/main/resources/test-images/newbookstore.png");
 		InputStream is = new FileInputStream(shopImg);
-		ShopDto shopExecution = shopService.modifyShop(shop, is, "newbookstore.png");
+		ImageHolder imageHolder = new ImageHolder("newbookstore.png",is);
+		ShopDto shopExecution = shopService.modifyShop(shop, imageHolder);
 		System.out.println("new image file：" + shopExecution.getShop().getShopImg());
 	}
 	

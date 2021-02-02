@@ -1,7 +1,7 @@
 package com.ztgg.ecommerce.service;
 
-import java.io.InputStream;
 
+import com.ztgg.ecommerce.dto.ImageHolder;
 import com.ztgg.ecommerce.dto.ShopDto;
 import com.ztgg.ecommerce.entity.Shop;
 import com.ztgg.ecommerce.exceptions.ShopOperationException;
@@ -16,7 +16,7 @@ public interface ShopService {
 	 * @param fileName
 	 * @return
 	 */
-	ShopDto addShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+	ShopDto addShop(Shop shop, ImageHolder thumbnail) throws ShopOperationException;
 	
 	/**
 	 * get shop by ID
@@ -34,7 +34,7 @@ public interface ShopService {
 	 * @return
 	 * @throws ShopOperationException
 	 */
-	ShopDto modifyShop(Shop shop, InputStream shopImgInputStream, String fileName) throws ShopOperationException;
+	ShopDto modifyShop(Shop shop, ImageHolder thumbnail) throws ShopOperationException;
 	
 	/**
 	 * return pagintaed shop list based on filters

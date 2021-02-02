@@ -18,6 +18,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ztgg.ecommerce.dto.ImageHolder;
 import com.ztgg.ecommerce.dto.ShopDto;
 import com.ztgg.ecommerce.entity.Shop;
 import com.ztgg.ecommerce.entity.User;
@@ -111,7 +112,8 @@ public class ShopController {
 			ShopDto shopDto;
 			
 			try {
-				shopDto = shopService.addShop(shop, shopImg.getInputStream(),shopImg.getOriginalFilename());
+				ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(),shopImg.getInputStream());
+				shopDto = shopService.addShop(shop,imageHolder);
 				if (shopDto.getState() == ShopStateEnum.CHECK.getState()) {
 					modelMap.put("success", true);
 					
@@ -200,9 +202,10 @@ public class ShopController {
 			shop.setOwner(owner);
 			try {
 				if (shopImg == null) {
-					shopDto = shopService.modifyShop(shop, null, null);
+					shopDto = shopService.modifyShop(shop, null);
 				} else {
-					shopDto = shopService.modifyShop(shop, shopImg.getInputStream(),shopImg.getOriginalFilename());
+					ImageHolder imageHolder = new ImageHolder(shopImg.getOriginalFilename(),shopImg.getInputStream());
+					shopDto = shopService.modifyShop(shop, imageHolder);
 				}
 				if (shopDto.getState() == ShopStateEnum.SUCCESS.getState()) {
 					modelMap.put("success", true);
